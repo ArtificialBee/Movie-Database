@@ -1,5 +1,21 @@
-*{
-  margin:0;
-  padding:0;
+* {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+}
+
+body {
+  background: #0b1d2e;
+  max-width: 954px;
+  margin: 93px auto;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+.active-path {
+  color: #76c3ef;
 }

@@ -1,11 +1,12 @@
-import React from 'react'
+import React from "react";
+import Layout from "../layout";
 
 function Movies() {
-    return (
-        <div>
-            Movies component
-        </div>
-    )
+  return (
+    <div>
+      <Layout />
+    </div>
+  );
 }
 
-export default Movies
+export default Movies;
