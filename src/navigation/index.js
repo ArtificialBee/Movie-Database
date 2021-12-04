@@ -4,24 +4,33 @@ import { NavLink } from "react-router-dom";
 
 import navLinks from "./config";
 
+const NavigationWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 48px;
+  @media (max-width: 767px) {
+    justify-content: center;
+  }
+`;
+
 const LinkTitle = styled.h1`
   font-size: 1.4375rem;
   font-weight: 400;
-  display: inline-block;
-  margin-right: 48px;
 `;
 
 function Navigation() {
   return (
-    <>
-      {navLinks.map((navlink) => {
+    <NavigationWrapper>
+      {navLinks.map(({ path, title }, index) => {
+        console.log(index);
         return (
-          <NavLink to={navlink.path}>
-            <LinkTitle>{navlink.title}</LinkTitle>
+          <NavLink to={path} key={index}>
+            <LinkTitle>{title}</LinkTitle>
           </NavLink>
         );
       })}
-    </>
+    </NavigationWrapper>
   );
 }
 
