@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Navigation from "./navigation";
 import { Routes, Route, Navigate } from "react-router-dom";
+import { useQuery } from "react-query";
 
 import Movies from "./features/pages/Movies";
 import Shows from "./features/pages/Shows";
