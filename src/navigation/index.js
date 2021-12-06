@@ -23,7 +23,6 @@ function Navigation() {
   return (
     <NavigationWrapper>
       {navLinks.map(({ path, title }, index) => {
-        console.log(index);
         return (
           <NavLink to={path} key={index}>
             <LinkTitle>{title}</LinkTitle>

@@ -1,19 +1,15 @@
 import React from "react";
-import { useQuery } from "react-query";
+import useFetchData from "../../hooks/apiHooks/useFetchData";
 
 import Layout from "../layout";
 import dataAxios from "../../config/api/apiKeyInstance";
 
-const fetchShows = async () => {
-  const response = await dataAxios.get("/tv/top_rated");
-  return response;
-};
-
 function Shows() {
-  const { data, status } = useQuery("movies", fetchShows);
+  const [data, status] = useFetchData("/tv/top_rated", "tv");
+  console.log("SERIJE -> ", data);
   return (
     <div>
-      <Layout c="g" />
+      <Layout data={data ? data.data.results : null} />
     </div>
   );
 }

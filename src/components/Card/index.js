@@ -9,10 +9,10 @@ const CardWrapper = styled.div`
   align-items: flex-end;
 `;
 
-const CardTitle = styled.div`
+const CardTitleBox = styled.div`
+  position: relative;
   width: 100%;
   height: 120px;
-  background: yellow;
   background: linear-gradient(
     359.55deg,
     #000000 23.87%,
@@ -20,10 +20,25 @@ const CardTitle = styled.div`
   );
 `;
 
-function ContentCard({ bgColor }) {
+const CardTitle = styled.h1`
+  position: absolute;
+  bottom: 13px;
+  left: 15px;
+  font-weight: 400;
+  font-size: 1.1rem;
+  color: white;
+`;
+
+function ContentCard({ title }) {
+  if (title.length > 30) {
+    const oldTitle = title;
+    title = oldTitle.slice(0, 30) + "...";
+  }
   return (
     <CardWrapper>
-      <CardTitle></CardTitle>
+      <CardTitleBox>
+        <CardTitle>{title}</CardTitle>
+      </CardTitleBox>
     </CardWrapper>
   );
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import ContentCard from "../../components/Card";
 
@@ -19,17 +19,16 @@ const LayoutWrapper = styled.div`
   }
 `;
 
-function Layout() {
+function Layout({ data }) {
+  useEffect(() => {
+    console.log("UNUTAR LAYOUTA -> ", data);
+  }, [data]);
+
   return (
     <LayoutWrapper>
-      <ContentCard />
-      <ContentCard />
-      <ContentCard />
-      <ContentCard />
-      <ContentCard />
-      <ContentCard />
-      <ContentCard />
-      <ContentCard />
+      {data?.map((element) => {
+        return <ContentCard title={element.title || element.name} />;
+      })}
     </LayoutWrapper>
   );
 }
