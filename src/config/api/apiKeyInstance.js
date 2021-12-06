@@ -4,7 +4,7 @@ import {
   requestHandler,
   responseHandler,
   errorHandler,
-} from "./helpers/interceptorHeplers";
+} from "./interceptorHeplers";
 
 const _axios = axios.create({
   baseURL: "https://api.themoviedb.org/3",

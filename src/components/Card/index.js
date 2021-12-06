@@ -2,7 +2,8 @@ import React from "react";
 import styled from "styled-components";
 
 const CardWrapper = styled.div`
-  background: #214e77;
+  background-image: url(${({ image_path }) => image_path});
+  background-size: cover;
   width: 100%;
   height: 200px;
   display: flex;
@@ -29,13 +30,13 @@ const CardTitle = styled.h1`
   color: white;
 `;
 
-function ContentCard({ title }) {
+function ContentCard({ title, image_path }) {
   if (title.length > 30) {
     const oldTitle = title;
     title = oldTitle.slice(0, 30) + "...";
   }
   return (
-    <CardWrapper>
+    <CardWrapper image_path={image_path}>
       <CardTitleBox>
         <CardTitle>{title}</CardTitle>
       </CardTitleBox>

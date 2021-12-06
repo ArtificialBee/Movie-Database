@@ -27,7 +27,12 @@ function Layout({ data }) {
   return (
     <LayoutWrapper>
       {data?.map((element) => {
-        return <ContentCard title={element.title || element.name} />;
+        return (
+          <ContentCard
+            title={element.title || element.name}
+            image_path={element.full_image_path}
+          />
+        );
       })}
     </LayoutWrapper>
   );
