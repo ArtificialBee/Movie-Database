@@ -14,5 +14,5 @@ export default function useFetchData(endopint, queryName) {
 
   //const { data, dataStatus } = 
 
-  return useQuery(`${queryName}`, fetchData);
+  return useQuery(queryName, fetchData);
 }
