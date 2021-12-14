@@ -1,5 +1,7 @@
 import React from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
+import usePathname from "../../routing/usePathname";
 
 const CardWrapper = styled.div`
   background-image: url(${({ image_path }) => image_path});
@@ -8,6 +10,7 @@ const CardWrapper = styled.div`
   height: 200px;
   display: flex;
   align-items: flex-end;
+  cursor: pointer;
 `;
 
 const CardTitleBox = styled.div`
@@ -26,17 +29,25 @@ const CardTitle = styled.h1`
   bottom: 13px;
   left: 15px;
   font-weight: 400;
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: white;
 `;
 
-function ContentCard({ title, image_path }) {
+function ContentCard({ id, title, image_path }) {
   if (title.length > 30) {
     const oldTitle = title;
     title = oldTitle.slice(0, 30) + "...";
   }
+
+  const { pathname } = useLocation();
+
+  const navigate = useNavigate();
+
+  const navigateToDetails = () => {
+    navigate(`${pathname}/${id}`);
+  };
   return (
-    <CardWrapper image_path={image_path}>
+    <CardWrapper image_path={image_path} onClick={() => navigateToDetails()}>
       <CardTitleBox>
         <CardTitle>{title}</CardTitle>
       </CardTitleBox>

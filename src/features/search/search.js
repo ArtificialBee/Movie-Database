@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
+import SearchInput from "./searchInput";
 
-function Search() {
-  return <div></div>;
-}
+const Search = ({ placeholder, endpoint, children }) => {
+  return (
+    <>
+      <SearchInput placeholder={placeholder} endpoint={endpoint}>
+        {children}
+      </SearchInput>
+    </>
+  );
+};
 
 export default Search;

@@ -1,13 +1,13 @@
 import React from "react";
 import { useQuery } from "react-query";
-import useFetchData from "../../hooks/apiHooks/useFetchData";
+import { useImageURL } from "../../context/imageURLContext";
 
 import Layout from "../layout";
 import { getShows } from "./showsAPI";
 
-function Shows({ imageURL }) {
+function Shows() {
   const { data, isLoading, error } = useQuery("shows", getShows);
-  console.log("SERIJE -> ", data);
+  const imageURL = useImageURL();
 
   if (isLoading) {
     return <p>Loading shows...</p>;
