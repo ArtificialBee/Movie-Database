@@ -1,6 +1,5 @@
-import { createContext } from "react";
+import { createContext, useContext, useState } from "react";
 import { useQuery } from "react-query";
-import { useContext, useState } from "react";
 import { getImageURL } from "../config/api/imageURL_API";
 
 export const ImageURLContext = createContext();

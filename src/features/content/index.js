@@ -1,20 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useMutation } from "react-query";
 import { useParams, useSearchParams } from "react-router-dom";
 import { getData } from "./getData";
 import { useDebounce } from "use-debounce";
-import Layout from "../layout";
-import SearchInput from "../search/searchInput";
+import Layout from "../../components/layout";
+import SearchInput from "../../components/search/searchInput";
 
 function Content() {
   const { content } = useParams(); //Web-route parameters
-  const [searchParams, setSearchParams] = useSearchParams(); //state for search parameters
-  const searchPreParameter = searchParams.get("q") ? searchParams.get("q") : ""; //variable for remeber if search parameter exist
-  const [search, setSearch] = useState(searchPreParameter); //state for search
+  let [searchParams, setSearchParams] = useSearchParams(); //state for search parameters
+  const [search, setSearch] = useState(searchParams.get("q") || ""); //state for search
 
-  const [data, setData] = useState(null); //fetched data
   const [debauncedSearch] = useDebounce(search, 1000); //debounced data (1s)
-  const { mutate } = useMutation(content, getData); //mutation
+  const { mutate, data } = useMutation(content, getData); //mutation
 
   useEffect(() => {
     let mutationObject = {
@@ -38,11 +36,7 @@ function Content() {
       setSearchParams({ q: search });
     }
 
-    mutate(mutationObject, {
-      onSuccess: ({ results }) => {
-        setData(results);
-      },
-    });
+    mutate(mutationObject);
   }, [content, debauncedSearch, searchParams]);
 
   return (
@@ -56,7 +50,7 @@ function Content() {
         }
         value={search}
       />
-      <Layout data={data} />
+      <Layout data={data?.results} />
     </>
   );
 }

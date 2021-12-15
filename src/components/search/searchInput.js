@@ -1,7 +1,6 @@
-import React, { useState, useContext, createContext, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { BiSearchAlt } from "react-icons/bi";
-import { useDebounce } from "use-debounce/lib";
 
 const InputWrapper = styled.form`
   display: flex;

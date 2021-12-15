@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import _axios from "../../config/api/apiKeyInstance";
 import { useImageURL } from "../../context/imageURLContext";
 import MoreInfo from "./moreInfo";
 import { BiCalendar, BiTime } from "react-icons/bi";
+import { runtimeHandler } from "../../utils/runtimeHandler";
+
 const DeatilWrapper = styled.div`
   height: 100%;
   width: 100%;
@@ -86,14 +88,13 @@ const DateTimeWrapper = styled.div`
   gap: 13px;
 `;
 
-function Details({ onOpen }) {
+function Details() {
   const { content, id } = useParams();
   const [data, setData] = useState(null); //state for fetched data
   const imageURL = useImageURL();
 
   const getDetails = async () => {
-    const response = await _axios(`${content}/${id}`);
-    return response;
+    return await _axios(`${content}/${id}`);
   };
 
   useEffect(() => {
@@ -106,22 +107,8 @@ function Details({ onOpen }) {
       .catch((err) => {
         console.log("Error : ", err);
       });
-    //Changing navbar state
-    onOpen(false);
-    return () => {
-      onOpen(true);
-    };
   }, []);
-  console.log("Ovo je data -> ", data);
-  let runtime = null; //variable fir dinamically render runtime or episode_run_time
-  if (data) {
-    if (data.runtime) {
-      runtime = data.runtime + " min";
-    }
-    if (data.episode_run_time) {
-      runtime = data.episode_run_time + " /ep";
-    }
-  }
+
   return (
     <DeatilWrapper>
       <Cover imagePath={data ? imageURL + data.backdrop_path : null}>
@@ -150,7 +137,9 @@ function Details({ onOpen }) {
                 ? data.release_date || data.first_air_date
                 : "Loading date..."}
             </MoreInfo>
-            <MoreInfo icon={<BiTime size={25} />}>{runtime}</MoreInfo>
+            <MoreInfo icon={<BiTime size={25} />}>
+              {runtimeHandler(data)}
+            </MoreInfo>
           </DateTimeWrapper>
           <Overview>{data ? data.overview : "Loading overview..."}</Overview>
         </DetailsSection>

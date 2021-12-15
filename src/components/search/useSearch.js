@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useMutation, useQuery } from "react-query";
+import React, { useEffect, useState } from "react";
+import { useMutation } from "react-query";
 import searchAPI from "./searchAPI";
 
 export const useSearch = (valueForSearch, endpoint) => {

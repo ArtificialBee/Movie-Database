@@ -1,9 +1,9 @@
 import axios from "axios";
 
 import {
+  errorHandler,
   requestHandler,
   responseHandler,
-  errorHandler,
 } from "./interceptorHeplers";
 
 const _axios = axios.create({

@@ -1,7 +1,6 @@
 import React from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import usePathname from "../../routing/usePathname";
 
 const CardWrapper = styled.div`
   background-image: url(${({ image_path }) => image_path});

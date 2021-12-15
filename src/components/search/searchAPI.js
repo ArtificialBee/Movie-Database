@@ -1,6 +1,4 @@
-import { useState } from "react";
 import _axios from "../../config/api/apiKeyInstance";
-import { useQuery } from "react-query";
 
 const searchAPI = async (formData) => {
   const { query, endpoint } = formData;

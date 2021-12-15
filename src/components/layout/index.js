@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
-import ContentCard from "../../components/Card";
+import ContentCard from "../Card";
 import { useImageURL } from "../../context/imageURLContext";
 
 const LayoutWrapper = styled.div`
