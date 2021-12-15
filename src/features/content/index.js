@@ -5,13 +5,14 @@ import { getData } from "./getData";
 import { useDebounce } from "use-debounce";
 import Layout from "../../components/layout";
 import SearchInput from "../../components/search/searchInput";
+import { deleteQuery } from "../../utils/deleteQuery";
 
 function Content() {
   const { content } = useParams(); //Web-route parameters
-  let [searchParams, setSearchParams] = useSearchParams(); //state for search parameters
+  const [searchParams, setSearchParams] = useSearchParams(); //state for search parameters
   const [search, setSearch] = useState(searchParams.get("q") || ""); //state for search
 
-  const [debauncedSearch] = useDebounce(search, 1000); //debounced data (1s)
+  const [debauncedSearch] = useDebounce(search, 300); //debounced data (1s)
   const { mutate, data } = useMutation(content, getData); //mutation
 
   useEffect(() => {
@@ -22,7 +23,9 @@ function Content() {
     if (debauncedSearch.length > 3) {
       mutationObject.endpoint = `/search/${content}`;
       mutationObject.searchValue = debauncedSearch;
+      setSearchParams({ q: search });
     } else {
+      setSearchParams(deleteQuery(searchParams, "q"));
       delete mutationObject.searchValue;
       if (content === "movie") {
         mutationObject.endpoint = "/movie/top_rated";
@@ -30,10 +33,6 @@ function Content() {
       if (content === "tv") {
         mutationObject.endpoint = "/tv/top_rated";
       }
-    }
-
-    if (search !== "") {
-      setSearchParams({ q: search });
     }
 
     mutate(mutationObject);
