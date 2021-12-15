@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { useQuery } from "react-query";
 import styled from "styled-components";
+import { getDetails } from "./detailsAPI";
 import { useParams } from "react-router-dom";
 import _axios from "../../config/api/apiKeyInstance";
 import { useImageURL } from "../../context/imageURLContext";
 import MoreInfo from "./moreInfo";
 import { BiCalendar, BiTime } from "react-icons/bi";
+import { LoadingSpinner } from "../../components/spinners/spinner";
+
 const DeatilWrapper = styled.div`
   height: 100%;
   width: 100%;
@@ -86,73 +90,45 @@ const DateTimeWrapper = styled.div`
   gap: 13px;
 `;
 
-function Details({ onOpen }) {
+function Details() {
   const { content, id } = useParams();
-  const [data, setData] = useState(null); //state for fetched data
+  const { data, isLoading, error } = useQuery(id, () =>
+    getDetails(content, id)
+  );
   const imageURL = useImageURL();
 
-  const getDetails = async () => {
-    const response = await _axios(`${content}/${id}`);
-    return response;
-  };
-
-  useEffect(() => {
-    getDetails()
-      .then((res) => {
-        setData(res.data);
-        if (res.data.backdrop_path) {
-        }
-      })
-      .catch((err) => {
-        console.log("Error : ", err);
-      });
-    //Changing navbar state
-    onOpen(false);
-    return () => {
-      onOpen(true);
-    };
-  }, []);
-  console.log("Ovo je data -> ", data);
-  let runtime = null; //variable fir dinamically render runtime or episode_run_time
-  if (data) {
-    if (data.runtime) {
-      runtime = data.runtime + " min";
-    }
-    if (data.episode_run_time) {
-      runtime = data.episode_run_time + " /ep";
-    }
+  if (isLoading) {
+    return <LoadingSpinner />;
   }
+
+  console.log("Ovo je data -> ", data);
   return (
     <DeatilWrapper>
-      <Cover imagePath={data ? imageURL + data.backdrop_path : null}>
+      <Cover imagePath={imageURL + data.backdrop_path}>
         <HoverDiv>
           <TitleAndOverviewWrapper>
-            <Title>{data ? data.title || data.name : "Loading name..."}</Title>
-            <Overview>{data ? data.tagline : "Loading tagline..."}</Overview>
+            <Title>{data.title || data.name}</Title>
+            <Overview>{data.tagline}</Overview>
           </TitleAndOverviewWrapper>
           <Genres>
-            {data
-              ? data.genres.map((genre) => {
-                  return <p key={genre.id}>{genre.name}</p>;
-                })
-              : null}
+            {data.genres.map((genre) => {
+              return <p key={genre.id}>{genre.name}</p>;
+            })}
           </Genres>
         </HoverDiv>
-        {data ? (
-          !data.backdrop_path ? (
-            <NoCoverImage>This contetn has no cover image!</NoCoverImage>
-          ) : null
+        {!data.backdrop_path ? (
+          <NoCoverImage>This contetn has no cover image!</NoCoverImage>
         ) : null}
         <DetailsSection>
           <DateTimeWrapper>
             <MoreInfo icon={<BiCalendar size={25} />}>
-              {data
-                ? data.release_date || data.first_air_date
-                : "Loading date..."}
+              {data.release_date || data.first_air_date}
             </MoreInfo>
-            <MoreInfo icon={<BiTime size={25} />}>{runtime}</MoreInfo>
+            <MoreInfo icon={<BiTime size={25} />}>
+              {data.runtime || data.episode_run_time[0]}
+            </MoreInfo>
           </DateTimeWrapper>
-          <Overview>{data ? data.overview : "Loading overview..."}</Overview>
+          <Overview>{data.overview}</Overview>
         </DetailsSection>
       </Cover>
     </DeatilWrapper>

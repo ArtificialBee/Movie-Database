@@ -1,7 +1,7 @@
 import React from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
-import usePathname from "../../routing/usePathname";
+import { OpacityKeyframe } from "../keyframes/keyframes";
 
 const CardWrapper = styled.div`
   background-image: url(${({ image_path }) => image_path});
@@ -11,6 +11,8 @@ const CardWrapper = styled.div`
   display: flex;
   align-items: flex-end;
   cursor: pointer;
+  opacity: 0;
+  animation: ${OpacityKeyframe} 0.5s linear ${({ delay }) => delay}ms forwards;
 `;
 
 const CardTitleBox = styled.div`
@@ -33,7 +35,7 @@ const CardTitle = styled.h1`
   color: white;
 `;
 
-function ContentCard({ id, title, image_path }) {
+function ContentCard({ id, title, image_path, delay }) {
   if (title.length > 30) {
     const oldTitle = title;
     title = oldTitle.slice(0, 30) + "...";
@@ -47,7 +49,11 @@ function ContentCard({ id, title, image_path }) {
     navigate(`${pathname}/${id}`);
   };
   return (
-    <CardWrapper image_path={image_path} onClick={() => navigateToDetails()}>
+    <CardWrapper
+      image_path={image_path}
+      delay={delay}
+      onClick={() => navigateToDetails()}
+    >
       <CardTitleBox>
         <CardTitle>{title}</CardTitle>
       </CardTitleBox>

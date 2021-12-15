@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import ContentCard from "../../components/Card";
 import { useImageURL } from "../../context/imageURLContext";
@@ -26,12 +26,13 @@ function Layout({ data }) {
   return (
     <>
       <LayoutWrapper>
-        {data?.map((element) => {
+        {data?.map(({ title, name, poster_path, id }, index) => {
           return (
             <ContentCard
-              title={element.title || element.name}
-              image_path={imageURL + element.poster_path}
-              id={element.id}
+              title={title || name}
+              image_path={imageURL + poster_path}
+              id={id}
+              delay={Math.random() * 1000}
             />
           );
         })}

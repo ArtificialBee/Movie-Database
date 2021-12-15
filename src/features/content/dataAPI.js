@@ -6,5 +6,6 @@ export const getData = async ({ endpoint, searchValue }) => {
     params = { query: searchValue };
   }
   const { data } = await _axios.get(endpoint, { params: { ...params } });
-  return data;
+  console.log("[getData] ->", data);
+  return data.results;
 };
