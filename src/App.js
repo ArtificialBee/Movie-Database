@@ -1,4 +1,3 @@
-import React from "react";
 import NavigationRoutes from "./routing/routes";
 import { ImageURLProvider } from "./context/imageURLContext";
 

@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import ContentCard from "../../components/Card";
 import { useImageURL } from "../../context/imageURLContext";
@@ -32,6 +31,7 @@ function Layout({ data }) {
               title={title || name}
               image_path={imageURL + poster_path}
               id={id}
+              key={id}
               delay={Math.random() * 1000}
             />
           );

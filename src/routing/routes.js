@@ -4,7 +4,6 @@ import Content from "../features/content";
 import Navbar from "../components/navbar/Navbar";
 
 const NavigationRoutes = ({ changeNavigation }) => {
-  console.log("Rendovao sam [NavigationRoutes.js]");
   return (
     <Routes>
       <Route path="/" element={<Navbar />}>

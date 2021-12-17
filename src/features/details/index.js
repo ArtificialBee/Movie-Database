@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from "react";
 import { useQuery } from "react-query";
 import styled from "styled-components";
 import { getDetails } from "./detailsAPI";
 import { useParams } from "react-router-dom";
-import _axios from "../../config/api/apiKeyInstance";
 import { useImageURL } from "../../context/imageURLContext";
 import MoreInfo from "./moreInfo";
 import { BiCalendar, BiTime } from "react-icons/bi";
@@ -101,7 +99,6 @@ function Details() {
     return <LoadingSpinner />;
   }
 
-  console.log("Ovo je data -> ", data);
   return (
     <DeatilWrapper>
       <Cover imagePath={imageURL + data.backdrop_path}>

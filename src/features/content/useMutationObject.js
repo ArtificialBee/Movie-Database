@@ -7,30 +7,44 @@ function deleteQuery(object, param) {
   return object.toString();
 }
 
-const useMutationObject = (content, initialValue) => {
+const useMutationObject = (content, initialValue, page) => {
+  const [searchParams, setSearchParams] = useSearchParams(); //state for search parameters
   const [mutationObject, setMutaionObject] = useState({
-    endpoint: `/search/${content}`,
+    endpoint: ``,
+    page: page,
   });
   const [debounced] = useDebounce(initialValue, 500);
-  const [searchParams, setSearchParams] = useSearchParams(); //state for search parameters
 
   useEffect(() => {
     if (debounced.length > 3) {
       setMutaionObject({
+        page: page,
         endpoint: `/search/${content}`,
         searchValue: debounced,
       });
-      setSearchParams({ q: debounced });
+      setSearchParams({ q: debounced, page: page });
     } else {
-      setSearchParams(deleteQuery(searchParams, "q"));
-      if (content === "movie") {
-        setMutaionObject({ endpoint: "/movie/top_rated" });
+      if (mutationObject.searchValue) {
+        setSearchParams(deleteQuery(searchParams, "q"));
       }
+
+      setSearchParams({ page: page });
+
+      if (content === "movie") {
+        setMutaionObject({
+          endpoint: "/movie/top_rated",
+          page: page,
+        });
+      }
+
       if (content === "tv") {
-        setMutaionObject({ endpoint: "/tv/top_rated" });
+        setMutaionObject({
+          endpoint: "/tv/top_rated",
+          page: page,
+        });
       }
     }
-  }, [content, debounced]);
+  }, [content, debounced, page]);
   return mutationObject;
 };
 
